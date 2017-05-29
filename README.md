@@ -54,6 +54,8 @@ Which outputs the following JSON string:
 CoderNode node = new CoderNode().fromString(raw_json);
 
 boolean myBool = node.getBoolean("boolValue").orElseThrow(() -> new RuntimeException("Value was not found!"));
+CoderNode myNode = node.getNode("myNode").orElseThrow(() -> new RuntimeException("Value was not found!"));
+CoderArray myArray = node.getArray("myArray").orElseThrow(() -> new RuntimeException("Value was not found!"));
 ```
 The type Optional is returned, so you can handle missing data.
 
