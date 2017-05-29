@@ -50,14 +50,18 @@ Which outputs the following JSON string:
 ```
 
 ### Decoding
+
+You can call getMethods to get and coerce the data to the type you require. If the data cannot be coerced or does not exist, it will return Optional.empty. The type Optional is returned, so you can handle missing or malformed data.
 ```java
 CoderNode node = new CoderNode().fromString(raw_json);
 
-boolean myBool = node.getBoolean("boolValue").orElseThrow(() -> new RuntimeException("Value was not found!"));
+boolean myBool = node.getBoolean("myBool").orElseThrow(() -> new RuntimeException("Value was not found!"));
 CoderNode myNode = node.getNode("myNode").orElseThrow(() -> new RuntimeException("Value was not found!"));
 CoderArray myArray = node.getArray("myArray").orElseThrow(() -> new RuntimeException("Value was not found!"));
+
+// the following returns Optional.null and therefore throws an error because CoderNode cannot be coerced into an integer:
+int anInteger = node.getInt("myNode").orElseThrow(() -> new RuntimeException("Value was not found!"));
 ```
-The type Optional is returned, so you can handle missing data.
 
 
 There's also a shorter notation:
