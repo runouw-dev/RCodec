@@ -4,8 +4,12 @@ RCodec; an encoder and decoder library for Java.
 
 ## Getting Started
 
-To encode:
+#Encoding
+CoderNode represents a JSON object, and CoderArray represents a JSON array. You can call the set() method to encode data. Be careful to supply only primitives types though. An EncoderException will be thrown if the type cannot be encoded.
+
+Example:
 ```java
+CoderNode node = new CoderNode();
 
 node.set("myBool", true);
 node.set("myByte", (byte) 223);
@@ -45,17 +49,16 @@ Which outputs the following JSON string:
 }
 ```
 
-To decode:
+# Decoding
 ```java
-
 CoderNode node = new CoderNode().fromString(raw_json);
 
-boolean myBool = node.getBoolean("boolValue").orElseThrow(() -> new Error());
-node.getByte("byteValue").orElseThrow(() -> new Error("Value wasn't found!"));
-...
+boolean myBool = node.getBoolean("boolValue").orElseThrow(() -> new RuntimeException("Value was not found!"));
 ```
+The type Optional is returned, so you can handle missing data.
 
-The type Optional is returned, so you can handle missing data. There's also a shorter notation:
+
+There's also a shorter notation:
 ```java
 node.ifDouble("myDouble", System.out::println);
 ```
@@ -73,6 +76,33 @@ node.ifArray("myArray", myArray -> myArray
 );
 ```
 
+# Compacting data
+You can additionally pack your data into smaller filesizes by minimizing the JSON, or by encoding to a binary format.
+
+You can use BeautifyRules in order to generate the minified string:
+```java
+CoderCode node = new CoderNoder();
+// write data into "node"
+...
+
+// get output
+node.withBeautify(BeautifyRules.MINIFIED).toString();
+```
+
+Calling toBytes() will encode as the binary format:
+```java
+CoderCode node = new CoderNoder();
+// write data into "node"
+...
+
+// get output
+node.toBytes();
+```
+
+To decode from bytes, you muse call fromBytes();
+```java
+CoderCode node = new CoderNoder().fromBytes(my_bytes);
+```
 
 ## Authors
 
