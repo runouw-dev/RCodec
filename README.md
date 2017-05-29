@@ -7,34 +7,42 @@ RCodec; an encoder and decoder library for Java.
 To encode:
 ```java
 
-CoderNode node = new CoderNode();
-        
-boolean boolValue = true;
-byte byteValue = (byte) 223;
-short shortValue = (short) 66573;
-int intValue = 3891;
-long longValue = 0x1122334455667788L;
-float floatValue = 10.014422f;
-double doubleValue = Math.PI;
-String stringValue = "abcdefghijklmnopqrstuvwxyz!@#$%^&*()1234567890;''\\\"\"";
-byte[] byteArrayValue = new byte[]{
+node.set("myBool", true);
+node.set("myByte", (byte) 223);
+node.set("myShort", (short) 66573);
+node.set("myInt", 3891);
+node.set("myLong", 0x1122334455667788L);
+node.set("myFloat", 10.014422f);
+node.set("myDouble", Math.PI);
+node.set("myString", "abcdefghijklmnopqrstuvwxyz!@#$%^&*()1234567890;''\\\"\"");
+node.set("myByteArray", new byte[]{
     (byte) 'b', (byte) 'a', (byte) 's', (byte) 'e', (byte) '6', (byte) '4',
     (byte) ' ', (byte) 'a', (byte) 's', (byte) 'c', (byte) 'i', (byte) 'i'
-};
+});
 
-
-node.set("boolValue", boolValue);
-node.set("byteValue", byteValue);
-node.set("shortValue", shortValue);
-node.set("intValue", intValue);
-node.set("longValue", longValue);
-node.set("floatValue", floatValue);
-node.set("doubleValue", doubleValue);
-node.set("stringValue", stringValue);
-node.set("byteArrayValue", byteArrayValue);
+node.withArray("myArray", arr -> {
+    for(int i=0;i<4;i++){
+        arr.add(i * i);
+    }
+});
 
 // output to JSON:
 node.toString();
+```
+Which outputs the following JSON string:
+```json
+{
+    "myBool": true, 
+    "myByte": -33, 
+    "myShort": 1037, 
+    "myInt": 3891, 
+    "myLong": 1234605616436508552, 
+    "myFloat": 10.014422, 
+    "myDouble": 3.141592653589793, 
+    "myString": "abcdefghijklmnopqrstuvwxyz!@#$%^&*()1234567890;''\\\"\"", 
+    "myByteArray": base64(YmFzZTY0IGFzY2lp), 
+    "myArray": [0, 1, 4, 9]
+}
 ```
 
 To decode:
@@ -43,10 +51,27 @@ To decode:
 CoderNode node = new CoderNode().fromString(raw_json);
 
 boolean myBool = node.getBoolean("boolValue").orElseThrow(() -> new Error());
-node.getByte("byteValue").orElseThrow(() -> new Error());
+node.getByte("byteValue").orElseThrow(() -> new Error("Value wasn't found!"));
 ...
 ```
 
+The type Optional is returned, so you can handle missing data. There's also a shorter notation:
+```java
+node.ifDouble("myDouble", System.out::println);
+```
+
+You can also open json objects and arrays when decoding with ifNode and ifArray and they will be skipped if they aren't provided.
+```java
+node.ifNode("myNode", myNode -> myNode
+    .ifDouble("myDouble", System.out::println)
+    .ifDouble("anotherDouble", System.out::println)
+);
+
+node.ifArray("myArray", myArray -> myArray
+    .ifDouble(0, System.out::println)
+    .ifDouble(1, System.out::println)
+);
+```
 
 
 ## Authors
