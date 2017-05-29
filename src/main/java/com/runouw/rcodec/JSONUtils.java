@@ -1,0 +1,83 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.runouw.rcodec;
+
+/**
+ *
+ * @author Robert
+ */
+public class JSONUtils {
+    public static String cleanString(String str){
+        StringBuilder newString = new StringBuilder();
+        for(int i=0;i<str.length();i++){
+            char c = str.charAt(i);
+            switch(c){
+                case '\\':
+                    newString.append('\\');
+                    newString.append(c);
+                    break;
+                case '"':
+                    newString.append('\\');
+                    newString.append(c);
+                    break;
+                case '\n':
+                    newString.append('\\');
+                    newString.append('n');
+                    break;
+                case '\t':
+                    newString.append('\\');
+                    newString.append('t');
+                    break;
+                case '\r':
+                    newString.append('\\');
+                    newString.append('r');
+                    break;
+                default:
+                    newString.append(c);
+                    break;
+            }
+        }
+        return newString.toString();
+    }
+    public static String restoreString(String str){
+        StringBuilder newString = new StringBuilder();
+        for(int i=0;i<str.length();i++){
+            char c = str.charAt(i);
+            char next = ((i + 1) >= str.length()) ? '\0' : (str.charAt(i + 1));
+            switch(c){
+                case '\n':
+                case '\r':
+                case '\t':
+                    break;
+                case '\\':
+                    switch(next){
+                        case 't':
+                            newString.append('\t');
+                            i++;
+                            break;
+                        case 'n':
+                            newString.append('\n');
+                            i++;
+                            break;
+                        case 'r':
+                            newString.append('\r');
+                            i++;
+                            break;
+                        default:
+                            newString.append(next);
+                            i++;
+                            break;
+                    }
+                    
+                    break;
+                default:
+                    newString.append(c);
+                    break;
+            }
+        }
+        return newString.toString();
+    }
+}
