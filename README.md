@@ -4,7 +4,7 @@ RCodec; an encoder and decoder library for Java.
 
 ## Getting Started
 
-# Encoding
+### Encoding
 CoderNode represents a JSON object, and CoderArray represents a JSON array. You can call the set() method to encode data. Be careful to supply only primitives types though. An EncoderException will be thrown if the type cannot be encoded.
 
 Example:
@@ -49,7 +49,7 @@ Which outputs the following JSON string:
 }
 ```
 
-# Decoding
+### Decoding
 ```java
 CoderNode node = new CoderNode().fromString(raw_json);
 
@@ -76,7 +76,7 @@ node.ifArray("myArray", myArray -> myArray
 );
 ```
 
-# Compacting data
+### Compacting data
 You can additionally pack your data into smaller filesizes by minimizing the JSON, or by encoding to a binary format.
 
 You can use BeautifyRules in order to generate the minified string:
