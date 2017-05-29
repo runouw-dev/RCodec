@@ -4,7 +4,7 @@ RCodec; an encoder and decoder library for Java.
 
 ## Getting Started
 
-#Encoding
+# Encoding
 CoderNode represents a JSON object, and CoderArray represents a JSON array. You can call the set() method to encode data. Be careful to supply only primitives types though. An EncoderException will be thrown if the type cannot be encoded.
 
 Example:
