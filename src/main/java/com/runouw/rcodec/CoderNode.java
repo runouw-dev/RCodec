@@ -15,8 +15,8 @@
  */
 package com.runouw.rcodec;
 
-import com.runouw.rcodec.DecodeException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +65,10 @@ public class CoderNode implements CoderContainer<String, CoderNode>{
         keysOrdered.add(key);
 
         return this;
+    }
+    
+    public List<String> getKeys() {
+        return Collections.unmodifiableList(keysOrdered);
     }
 
     @Override
