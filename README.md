@@ -102,10 +102,10 @@ CoderCode node = new CoderNoder();
 ...
 
 // get output
-node.toBytes();
+byte[] my_bytes = node.toBytes();
 ```
 
-To decode from bytes, you muse call fromBytes();
+To decode from bytes, you may call fromBytes();
 ```java
 CoderCode node = new CoderNoder().fromBytes(my_bytes);
 ```
