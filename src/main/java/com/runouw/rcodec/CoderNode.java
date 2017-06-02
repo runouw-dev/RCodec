@@ -61,8 +61,10 @@ public class CoderNode implements CoderContainer<String, CoderNode>{
 
     @Override
     public CoderNode setCoderData(String key, CoderData data) {
-        map.put(key, data);
-        keysOrdered.add(key);
+        CoderData last = map.put(key, data);
+        if(last == null){
+            keysOrdered.add(key);
+        }
 
         return this;
     }
