@@ -87,7 +87,7 @@ You can additionally pack your data into smaller filesizes by minimizing the JSO
 
 You can use BeautifyRules in order to generate the minified string:
 ```java
-CoderCode node = new CoderNoder();
+CoderCode node = new CoderNode();
 // write data into "node"
 ...
 
