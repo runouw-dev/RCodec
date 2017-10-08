@@ -97,7 +97,7 @@ node.withBeautify(BeautifyRules.MINIFIED).toString();
 
 Calling toBytes() will encode as the binary format:
 ```java
-CoderCode node = new CoderNoder();
+CoderCode node = new CoderNode();
 // write data into "node"
 ...
 
@@ -107,7 +107,7 @@ byte[] my_bytes = node.toBytes();
 
 To decode from bytes, you may call fromBytes();
 ```java
-CoderCode node = new CoderNoder().fromBytes(my_bytes);
+CoderCode node = new CoderNode().fromBytes(my_bytes);
 ```
 
 ## Authors
